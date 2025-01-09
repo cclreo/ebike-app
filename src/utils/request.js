@@ -1,22 +1,17 @@
 import Taro from '@tarojs/taro'
-import { baseUrl } from '@/config'
 
-const codeMessage = {
-  200: '服务器成功返回请求数据',
-  201: '新建或修改数据成功',
-  202: '一个请求已经进入后台排队',
-  204: '删除数据成功',
-  400: '请求错误',
-  401: '未授权，请重新登录',
-  403: '拒绝访问',
-  404: '请求失败',
-  405: '请求方法未允许',
-  408: '请求超时',
-  500: '服务器发生错误',
-  502: '网关错误',
-  503: '服务不可用',
-  504: '网关超时',
+// 定义基础配置
+const config = {
+  development: {
+    baseUrl: 'http://dev-api.example.com',
+  },
+  production: {
+    baseUrl: 'https://api.example.com',
+  }
 }
+
+const env = process.env.NODE_ENV || 'development'
+const baseUrl = config[env].baseUrl
 
 const request = (options = {}) => {
   const { url, data, method = 'GET', header = {}, loading = false } = options
@@ -48,7 +43,7 @@ const request = (options = {}) => {
           resolve(res.data)
         } else {
           Taro.showToast({
-            title: codeMessage[res.statusCode] || '请求失败',
+            title: '请求失败',
             icon: 'none',
           })
           reject(res)

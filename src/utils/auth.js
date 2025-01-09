@@ -1,6 +1,10 @@
 import Taro from '@tarojs/taro'
 import request from './request'
-import { api } from '@/config'
+
+const api = {
+  login: '/api/user/login',
+  getUserInfo: '/api/user/info'
+}
 
 // 登录方法
 export const login = async (username, password) => {

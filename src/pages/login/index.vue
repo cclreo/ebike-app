@@ -27,7 +27,7 @@
 <script>
 import { ref } from 'vue'
 import Taro from '@tarojs/taro'
-import { login } from '@/utils/auth'
+import { login } from '../../utils/auth'
 
 export default {
   setup() {
