@@ -26,7 +26,7 @@
 
 <script>
 import { ref } from 'vue'
-import Taro from '@tarojs/taro'
+import { showToast, switchTab } from '@tarojs/taro'
 import { login } from '../../utils/auth'
 
 export default {
@@ -36,7 +36,7 @@ export default {
 
     const handleLogin = async () => {
       if (!username.value || !password.value) {
-        Taro.showToast({
+        showToast({
           title: '请输入用户名和密码',
           icon: 'none'
         })
@@ -45,22 +45,25 @@ export default {
 
       try {
         const res = await login(username.value, password.value)
-        Taro.showToast({
+        showToast({
           title: '登录成功',
           icon: 'success'
         })
         
         // 登录成功后跳转
         setTimeout(() => {
-          Taro.switchTab({
+          switchTab({
             url: '/pages/index/index'
           })
         }, 1500)
       } catch (error) {
-        Taro.showToast({
+        showToast({
           title: '登录失败',
           icon: 'none'
         })
+        switchTab({
+            url: '/pages/index/index'
+          })
       }
     }
 

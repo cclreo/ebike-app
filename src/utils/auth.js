@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import { getStorageSync, setStorageSync, removeStorageSync } from '@tarojs/taro'
 import request from './request'
 
 const api = {
@@ -21,7 +21,7 @@ export const login = async (username, password) => {
     
     // 保存token
     if (res.token) {
-      Taro.setStorageSync('token', res.token)
+      setStorageSync('token', res.token)
     }
     
     return res
@@ -32,12 +32,12 @@ export const login = async (username, password) => {
 
 // 检查登录状态
 export const checkLogin = () => {
-  const token = Taro.getStorageSync('token')
+  const token = getStorageSync('token')
   return !!token
 }
 
 // 退出登录
 export const logout = () => {
-  Taro.removeStorageSync('token')
+  removeStorageSync('token')
   // 可以添加其他清理逻辑
 } 

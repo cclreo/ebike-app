@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import { request as taroRequest, showToast, showLoading, hideLoading, getStorageSync } from '@tarojs/taro'
 
 // 定义基础配置
 const config = {
@@ -17,12 +17,12 @@ const request = (options = {}) => {
   const { url, data, method = 'GET', header = {}, loading = false } = options
 
   if (loading) {
-    Taro.showLoading({
+    showLoading({
       title: '加载中...',
     })
   }
 
-  const token = Taro.getStorageSync('token')
+  const token = getStorageSync('token')
   const headers = {
     'Content-Type': 'application/json',
     ...header,
@@ -33,7 +33,7 @@ const request = (options = {}) => {
   }
 
   return new Promise((resolve, reject) => {
-    Taro.request({
+    taroRequest({
       url: `${baseUrl}${url}`,
       data,
       method,
@@ -42,7 +42,7 @@ const request = (options = {}) => {
         if (res.statusCode === 200) {
           resolve(res.data)
         } else {
-          Taro.showToast({
+          showToast({
             title: '请求失败',
             icon: 'none',
           })
@@ -50,7 +50,7 @@ const request = (options = {}) => {
         }
       },
       fail: (err) => {
-        Taro.showToast({
+        showToast({
           title: '网络请求失败',
           icon: 'none',
         })
@@ -58,7 +58,7 @@ const request = (options = {}) => {
       },
       complete: () => {
         if (loading) {
-          Taro.hideLoading()
+          hideLoading()
         }
       },
     })
