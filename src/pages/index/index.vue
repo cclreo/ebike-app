@@ -4,19 +4,35 @@
       <text class="title">共享服务</text>
     </view>
     
-    <view class="service-grid">
-      <view class="service-item" @tap="handleNavigate('my-ebike')">
-        <view class="icon-wrapper">
+    <view class="grid-container">
+      <view 
+        class="grid-item"
+        @tap="handleNavigate('my-ebike')"
+      >
+        <view class="icon-box">
           <canvas id="ebike-icon" canvas-id="ebike-icon" class="icon"></canvas>
         </view>
         <text class="label">我的电动车</text>
       </view>
       
-      <view class="service-item" @tap="handleNavigate('violation')">
-        <view class="icon-wrapper">
+      <view 
+        class="grid-item"
+        @tap="handleNavigate('violation')"
+      >
+        <view class="icon-box">
           <canvas id="violation-icon" canvas-id="violation-icon" class="icon"></canvas>
         </view>
         <text class="label">我的违法</text>
+      </view>
+      
+      <view class="grid-item disabled">
+        <view class="icon-box empty"></view>
+        <text class="label">敬请期待</text>
+      </view>
+      
+      <view class="grid-item disabled">
+        <view class="icon-box empty"></view>
+        <text class="label">敬请期待</text>
       </view>
     </view>
   </view>
@@ -24,22 +40,29 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import { switchTab, createCanvasContext } from '@tarojs/taro'
-import './index.less'
+import { createCanvasContext, reLaunch } from '@tarojs/taro'
 
 export default {
   setup() {
     const handleNavigate = (page) => {
-      switchTab({
-        url: `/pages/${page}/index`
+      console.log('navigating to:', page)
+      reLaunch({
+        url: `/pages/${page}/index`,
+        success: () => {
+          console.log('navigation success')
+        },
+        fail: (err) => {
+          console.error('navigation failed:', err)
+        },
+        complete: () => {
+          console.log('navigation complete')
+        }
       })
     }
 
     // 绘制电动车图标
     const drawEbikeIcon = () => {
       const ctx = createCanvasContext('ebike-icon')
-      
-      // 设置线条样式
       ctx.setLineWidth(2)
       ctx.setStrokeStyle('#07c160')
       
@@ -72,8 +95,6 @@ export default {
     // 绘制违法图标
     const drawViolationIcon = () => {
       const ctx = createCanvasContext('violation-icon')
-      
-      // 设置线条样式
       ctx.setLineWidth(2)
       ctx.setStrokeStyle('#ff4d4f')
       
@@ -98,7 +119,6 @@ export default {
     }
 
     onMounted(() => {
-      // 在组件挂载后绘制图标
       drawEbikeIcon()
       drawViolationIcon()
     })
@@ -112,34 +132,41 @@ export default {
 
 <style lang="less">
 .index {
-  padding: 20px;
+  padding: 30px 20px;
   
   .header {
-    margin-bottom: 30px;
-    text-align: center;  // 标题居中
+    margin-bottom: 40px;
+    text-align: center;
     
     .title {
       font-size: 36px;
       font-weight: bold;
       color: #333;
-      display: inline-block;  // 使用 inline-block 确保文字居中
+      display: inline-block;
     }
   }
   
-  .service-grid {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -10px;
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 10px;
     
-    .service-item {
-      width: 50%;
-      padding: 10px;
-      box-sizing: border-box;
+    .grid-item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       
-      .icon-wrapper {
+      &.disabled {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      
+      .icon-box {
         width: 120px;
         height: 120px;
         background: #f5f5f5;
@@ -148,6 +175,10 @@ export default {
         align-items: center;
         justify-content: center;
         margin-bottom: 16px;
+        
+        &.empty {
+          background: #eee;
+        }
         
         .icon {
           width: 60px;
@@ -158,6 +189,7 @@ export default {
       .label {
         font-size: 28px;
         color: #333;
+        font-weight: 500;
       }
     }
   }

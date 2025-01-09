@@ -42,8 +42,8 @@ import { ref } from 'vue'
 import { showToast } from '@tarojs/taro'
 
 export default {
+  name: 'MyEbike',
   setup() {
-    // 模拟数据
     const bikeList = ref([
       {
         id: 1,
@@ -86,88 +86,87 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style>
 .ebike-page {
   padding: 20px;
   min-height: 100vh;
   background: #f5f5f5;
-  box-sizing: border-box;
-  
-  .ebike-list {
-    .ebike-item {
-      margin-bottom: 20px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      
-      .bike-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-        
-        .plate-number {
-          font-size: 32px;
-          font-weight: bold;
-          color: #333;
-        }
-        
-        .status-tag {
-          padding: 4px 12px;
-          border-radius: 4px;
-          font-size: 24px;
-          
-          &.normal {
-            background: #e6f7e6;
-            color: #07c160;
-          }
-          
-          &.warning {
-            background: #fff2f0;
-            color: #ff4d4f;
-          }
-        }
-      }
-      
-      .bike-details {
-        .detail-item {
-          display: flex;
-          margin-bottom: 12px;
-          font-size: 28px;
-          
-          &:last-child {
-            margin-bottom: 0;
-          }
-          
-          .label {
-            color: #666;
-            width: 160px;
-          }
-          
-          .value {
-            color: #333;
-            flex: 1;
-          }
-        }
-      }
-    }
-  }
-  
-  .add-btn {
-    position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #07c160;
-    color: #fff;
-    padding: 20px 60px;
-    border-radius: 40px;
-    box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
-    
-    .btn-text {
-      font-size: 32px;
-    }
-  }
+}
+
+.ebike-list {
+  margin-bottom: 100px;
+}
+
+.ebike-item {
+  margin-bottom: 20px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.bike-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.plate-number {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-tag {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 24px;
+}
+
+.status-tag.normal {
+  background: #e6f7e6;
+  color: #07c160;
+}
+
+.status-tag.warning {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+.bike-details .detail-item {
+  display: flex;
+  margin-bottom: 12px;
+  font-size: 28px;
+}
+
+.bike-details .detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-item .label {
+  color: #666;
+  width: 160px;
+}
+
+.detail-item .value {
+  color: #333;
+  flex: 1;
+}
+
+.add-btn {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #07c160;
+  color: #fff;
+  padding: 20px 60px;
+  border-radius: 40px;
+  box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
+}
+
+.btn-text {
+  font-size: 32px;
 }
 </style> 
